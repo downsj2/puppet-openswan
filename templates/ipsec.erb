@@ -9,8 +9,8 @@ version	2.0	# conforms to second version of ipsec.conf specification
 
 # basic configuration
 config setup
-  dumpdir=/var/run/pluto/
-  plutostderrlog="/var/log/ipsec.log"
+	dumpdir=/var/run/pluto/
+	plutostderrlog="/var/log/ipsec.log"
 <% if @nat_traversal -%>
 	nat_traversal=<%= @nat_traversal %>
 <% end -%>
