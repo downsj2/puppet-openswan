@@ -13,7 +13,7 @@
 
 class openswan::service {
 
-  service { $openswan::opensewan_service :
+  service { $openswan::openswan_service :
     ensure     => running,
     enable     => true,
     hasstatus  => true,
