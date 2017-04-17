@@ -43,7 +43,7 @@
 class openswan (
   $ensure                   = 'present',
   $openswan_package         = $openswan::params::openswan_pkg,
-  $openswan_service        = $openswan::params::service_name,
+  $openswan_service         = $openswan::params::service_name,
   $nat_traversal            = $openswan::params::nat_traversal,
   $virtual_private          = $openswan::params::virtual_private,
   $opportunistic_encryption = $openswan::params::opportunistic_encryption,
