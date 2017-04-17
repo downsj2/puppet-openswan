@@ -53,6 +53,7 @@ class openswan (
   $ipsec_secrets_conf       = $openswan::params::ipsec_secrets_conf,
   $connections_dir          = $openswan::params::connections_dir,
   $secrets_dir              = $openswan::params::secrets_dir,
+  $manage_sysctl            = $openswan::params::manage_sysctl,
   $connections              = {},
 )inherits openswan::params{
   validate_re($ensure, ['present', 'absent'], "${ensure} is not a valid value for ensure attribute")
@@ -64,6 +65,22 @@ class openswan (
     contain openswan::install
     contain openswan::config
     contain openswan::service
+
+    if $manage_sysctl {
+      file { '/etc/sysctl.d/80-openswan.conf':
+        ensure  => 'present',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => "puppet:///modules/${module_name}/sysctl.conf",
+        notify  => Exec['openswan_sysctl'],
+      }
+
+      exec { 'openswan_sysctl':
+        refreshonly => true,
+        command     => '/sbin/sysctl -p /etc/sysctl.d/80-openswan.conf',
+      }
+    }
 
     create_resources('openswan::connection', $connections)
 

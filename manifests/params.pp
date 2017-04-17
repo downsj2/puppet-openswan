@@ -41,4 +41,8 @@ class openswan::params {
     }
   }
 
+  $manage_sysctl = $::osfamily ? {
+    'RedHat' => true,
+    default  => false
+  }
 }
