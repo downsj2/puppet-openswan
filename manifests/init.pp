@@ -52,7 +52,8 @@ class openswan (
   $ipsec_conf               = $openswan::params::ipsec_conf,
   $ipsec_secrets_conf       = $openswan::params::ipsec_secrets_conf,
   $connections_dir          = $openswan::params::connections_dir,
-  $secrets_dir              = $openswan::params::secrets_dir
+  $secrets_dir              = $openswan::params::secrets_dir,
+  $connections              = {},
 )inherits openswan::params{
   validate_re($ensure, ['present', 'absent'], "${ensure} is not a valid value for ensure attribute")
   validate_re($nat_traversal, ['yes', 'no'], 'valid values are : yes or no')
@@ -64,13 +65,12 @@ class openswan (
     contain openswan::config
     contain openswan::service
 
+    create_resources('openswan::connection', $connections)
+
     Class['openswan::install'] ->
     Class['openswan::config'] ~>
     Class['openswan::service']
-
-  }
-  else {
+  } else {
     contain openswan::install
   }
-
 }
