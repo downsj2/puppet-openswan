@@ -68,12 +68,12 @@ class openswan (
 
     if $manage_sysctl {
       file { '/etc/sysctl.d/80-openswan.conf':
-        ensure  => 'present',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        content => "puppet:///modules/${module_name}/sysctl.conf",
-        notify  => Exec['openswan_sysctl'],
+        ensure => 'present',
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0644',
+        source => "puppet:///modules/${module_name}/sysctl.conf",
+        notify => Exec['openswan_sysctl'],
       }
 
       exec { 'openswan_sysctl':
