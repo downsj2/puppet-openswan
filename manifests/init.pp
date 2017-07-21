@@ -72,7 +72,7 @@ class openswan (
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
-        content => template('openswan/sysctl.conf.erb')
+        content => template('openswan/sysctl.conf.erb'),
         notify  => Exec['openswan_sysctl'],
       }
 
